@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -97,8 +96,8 @@ export default {
 					}
 				},
 				'pulse-opacity': {
-					'0%, 100%': { opacity: '1' },
-					'50%': { opacity: '0.6' }
+					'0%, 100%': { opacity: '0.6' },
+					'50%': { opacity: '0.2' }
 				},
 				'slide-in': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
