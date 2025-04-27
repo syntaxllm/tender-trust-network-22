@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				blockchain: {
+					blue: '#0EA5E9',
+					purple: '#8B5CF6',
+					darkPurple: '#6E59A5',
+					lightPurple: '#E5DEFF',
+					green: '#10B981',
+					red: '#EF4444',
+					yellow: '#F59E0B',
+					gray: '#8E9196'
 				}
 			},
 			borderRadius: {
@@ -84,11 +95,26 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-opacity': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.6' }
+				},
+				'slide-in': {
+					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-opacity': 'pulse-opacity 2s ease-in-out infinite',
+				'slide-in': 'slide-in 0.3s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out'
 			}
 		}
 	},
