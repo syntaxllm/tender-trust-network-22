@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,33 +6,33 @@ import { Bell, LogOut, Menu, User, Users, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useWeb3 } from "@/contexts/Web3Context";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 const NavBar = () => {
-  const { toast } = useToast();
-  const { authState, logout } = useAuth();
-  const { account, isConnected, connectWallet, disconnectWallet, isConnecting } = useWeb3();
+  const {
+    toast
+  } = useToast();
+  const {
+    authState,
+    logout
+  } = useAuth();
+  const {
+    account,
+    isConnected,
+    connectWallet,
+    disconnectWallet,
+    isConnecting
+  } = useWeb3();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const handleNotificationClick = () => {
     toast({
       title: "No new notifications",
       description: "You're all caught up!"
     });
   };
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -48,66 +47,47 @@ const NavBar = () => {
   // Get initials for avatar fallback
   const getInitials = () => {
     if (!authState.user) return "?";
-    return authState.user.name
-      .split(" ")
-      .map(part => part[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2);
+    return authState.user.name.split(" ").map(part => part[0]).join("").toUpperCase().substring(0, 2);
   };
 
   // Get role-specific menu items
   const getMenuItems = () => {
-    const commonItems = [
-      {
-        title: "Dashboard",
-        path: "/",
-        allowedRoles: ["admin", "officer", "bidder"],
-      },
-      {
-        title: "Tenders",
-        path: "/tenders",
-        allowedRoles: ["admin", "officer", "bidder"],
-      }
-    ];
-    
-    const roleSpecificItems = [
-      {
-        title: "Create Tender",
-        path: "/create-tender",
-        allowedRoles: ["admin", "officer"],
-      },
-      {
-        title: "My Bids",
-        path: "/my-bids",
-        allowedRoles: ["bidder"],
-      },
-      {
-        title: "Manage Officers",
-        path: "/manage-officers",
-        allowedRoles: ["admin"],
-      },
-      {
-        title: "Reports",
-        path: "/reports",
-        allowedRoles: ["admin", "officer"],
-      }
-    ];
-    
+    const commonItems = [{
+      title: "Dashboard",
+      path: "/",
+      allowedRoles: ["admin", "officer", "bidder"]
+    }, {
+      title: "Tenders",
+      path: "/tenders",
+      allowedRoles: ["admin", "officer", "bidder"]
+    }];
+    const roleSpecificItems = [{
+      title: "Create Tender",
+      path: "/create-tender",
+      allowedRoles: ["admin", "officer"]
+    }, {
+      title: "My Bids",
+      path: "/my-bids",
+      allowedRoles: ["bidder"]
+    }, {
+      title: "Manage Officers",
+      path: "/manage-officers",
+      allowedRoles: ["admin"]
+    }, {
+      title: "Reports",
+      path: "/reports",
+      allowedRoles: ["admin", "officer"]
+    }];
     const allItems = [...commonItems, ...roleSpecificItems];
-    
+
     // Filter by user role
     if (!authState.user) return commonItems;
-    
-    return allItems.filter(item => 
-      item.allowedRoles.includes(authState.user!.role)
-    );
+    return allItems.filter(item => item.allowedRoles.includes(authState.user!.role));
   };
 
   // If not logged in, show minimal navbar with login link
   if (!authState.user) {
-    return (
-      <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
+    return <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
         <div className="px-3 py-3 lg:px-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
@@ -121,13 +101,7 @@ const NavBar = () => {
             </Link>
             
             <div className="flex items-center gap-4">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex items-center gap-2"
-                onClick={isConnected ? disconnectWallet : connectWallet}
-                disabled={isConnecting}
-              >
+              <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
                 <Wallet className="h-4 w-4" />
                 {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
               </Button>
@@ -141,13 +115,11 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-      </nav>
-    );
+      </nav>;
   }
 
   // Full navbar for logged-in users
-  return (
-    <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
+  return <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
       <div className="px-3 py-3 lg:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -163,51 +135,30 @@ const NavBar = () => {
           </div>
           
           {/* Role Badge */}
-          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden md:flex absolute left-4/2 transform -translate-x-1/2">
             <div className={`
               px-3 py-1 rounded-full text-white text-xs font-medium
-              ${authState.user.role === "admin" ? "bg-blockchain-purple" : 
-                authState.user.role === "officer" ? "bg-blockchain-blue" : 
-                "bg-blockchain-green"}
+              ${authState.user.role === "admin" ? "bg-blockchain-purple" : authState.user.role === "officer" ? "bg-blockchain-blue" : "bg-blockchain-green"}
             `}>
-              {authState.user.role === "admin" ? "Administrator" : 
-               authState.user.role === "officer" ? "Tender Officer" : 
-               "Bidder"}
+              {authState.user.role === "admin" ? "Administrator" : authState.user.role === "officer" ? "Tender Officer" : "Bidder"}
             </div>
           </div>
           
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
-            {getMenuItems().map(item => (
-              <Link 
-                key={item.path}
-                to={item.path} 
-                className="text-gray-600 hover:text-blockchain-purple transition-colors"
-              >
+            {getMenuItems().map(item => <Link key={item.path} to={item.path} className="text-gray-600 hover:text-blockchain-purple transition-colors">
                 {item.title}
-              </Link>
-            ))}
+              </Link>)}
           </div>
           
           <div className="flex items-center gap-4">
             {/* Wallet button */}
-            <Button 
-              variant={isConnected ? "secondary" : "default"}
-              size="sm" 
-              className={`${isConnected ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-blockchain-blue hover:bg-blockchain-purple'} hidden md:flex items-center gap-2`}
-              onClick={isConnected ? disconnectWallet : connectWallet}
-              disabled={isConnecting}
-            >
+            <Button variant={isConnected ? "secondary" : "default"} size="sm" className={`${isConnected ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-blockchain-blue hover:bg-blockchain-purple'} hidden md:flex items-center gap-2`} onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
               <Wallet className="h-4 w-4" />
               {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
             </Button>
             
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={handleNotificationClick} 
-              className="relative"
-            >
+            <Button variant="ghost" size="icon" onClick={handleNotificationClick} className="relative">
               <Bell className="h-5 w-5" />
               <span className="absolute top-0 right-0 h-2 w-2 bg-blockchain-red rounded-full"></span>
             </Button>
@@ -225,9 +176,7 @@ const NavBar = () => {
                       <AvatarImage src="" />
                       <AvatarFallback className={`
                         text-white
-                        ${authState.user.role === "admin" ? "bg-blockchain-purple" : 
-                          authState.user.role === "officer" ? "bg-blockchain-blue" : 
-                          "bg-blockchain-green"}
+                        ${authState.user.role === "admin" ? "bg-blockchain-purple" : authState.user.role === "officer" ? "bg-blockchain-blue" : "bg-blockchain-green"}
                       `}>
                         {getInitials()}
                       </AvatarFallback>
@@ -241,12 +190,10 @@ const NavBar = () => {
                     <User className="mr-2 h-4 w-4" />
                     Profile
                   </DropdownMenuItem>
-                  {authState.user.role === "bidder" && (
-                    <DropdownMenuItem>
+                  {authState.user.role === "bidder" && <DropdownMenuItem>
                       <Wallet className="mr-2 h-4 w-4" />
                       My Bids
-                    </DropdownMenuItem>
-                  )}
+                    </DropdownMenuItem>}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
@@ -255,22 +202,12 @@ const NavBar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={handleLogout}
-                className="hidden md:flex"
-              >
+              <Button variant="ghost" size="icon" onClick={handleLogout} className="hidden md:flex">
                 <LogOut className="h-5 w-5" />
               </Button>
             </div>
 
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="md:hidden" 
-              onClick={toggleMobileMenu}
-            >
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMobileMenu}>
               <Menu className="h-6 w-6" />
             </Button>
           </div>
@@ -278,50 +215,30 @@ const NavBar = () => {
       </div>
       
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 animate-slide-in">
+      {isMobileMenuOpen && <div className="md:hidden bg-white border-t border-gray-100 animate-slide-in">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {getMenuItems().map(item => (
-              <Link 
-                key={item.path}
-                to={item.path} 
-                className="block px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
+            {getMenuItems().map(item => <Link key={item.path} to={item.path} className="block px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
                 {item.title}
-              </Link>
-            ))}
+              </Link>)}
             
             {/* Mobile wallet connect button */}
-            <Button 
-              variant={isConnected ? "outline" : "default"}
-              size="sm" 
-              className="w-full justify-start px-3 py-2 mt-2"
-              onClick={(e) => {
-                e.preventDefault();
-                isConnected ? disconnectWallet() : connectWallet();
-              }}
-              disabled={isConnecting}
-            >
+            <Button variant={isConnected ? "outline" : "default"} size="sm" className="w-full justify-start px-3 py-2 mt-2" onClick={e => {
+          e.preventDefault();
+          isConnected ? disconnectWallet() : connectWallet();
+        }} disabled={isConnecting}>
               <Wallet className="mr-2 h-4 w-4" />
               {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
             </Button>
             
-            <button
-              className="w-full flex items-center px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                handleLogout();
-              }}
-            >
+            <button className="w-full flex items-center px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md" onClick={() => {
+          setIsMobileMenuOpen(false);
+          handleLogout();
+        }}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>
             </button>
           </div>
-        </div>
-      )}
-    </nav>
-  );
+        </div>}
+    </nav>;
 };
-
 export default NavBar;
