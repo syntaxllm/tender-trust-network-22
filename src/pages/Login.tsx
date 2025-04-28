@@ -49,15 +49,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 px-4">
+      <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1500&q=80')" }}></div>
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
             <div className="bg-gradient-to-r from-blockchain-blue to-blockchain-purple p-3 rounded-lg">
               <BadgeIndianRupee className="h-6 w-6 text-white" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">SmartTender</CardTitle>
+          <CardTitle className="text-2xl font-bold">TrustChain</CardTitle>
           <CardDescription>
             Blockchain-based tender management system
           </CardDescription>
@@ -102,7 +103,7 @@ const Login = () => {
                   </div>
                 </div>
                 
-                <Button type="submit" className="w-full" disabled={authState.isLoading}>
+                <Button type="submit" className="w-full bg-blockchain-blue hover:bg-blockchain-purple" disabled={authState.isLoading}>
                   {authState.isLoading ? "Logging in..." : "Login"}
                 </Button>
               </form>
@@ -202,7 +203,7 @@ const Login = () => {
                 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full bg-blockchain-blue hover:bg-blockchain-purple" 
                   disabled={authState.isLoading}
                 >
                   {authState.isLoading ? "Creating Account..." : "Create Account"}
@@ -219,7 +220,7 @@ const Login = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-500">
-            All currency in Indian Rupees (₹)
+            All transactions in Indian Rupees (₹)
           </p>
         </CardFooter>
       </Card>

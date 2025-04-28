@@ -13,13 +13,13 @@ const Tenders = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterVisible, setFilterVisible] = useState(false);
   
-  // Mock data for demo purposes
+  // Mock data for demo purposes - updated to INR
   const tenders = [
     { 
       id: 'T-2025-001', 
       title: 'Hospital Management System', 
       department: 'Healthcare', 
-      budget: '$250,000', 
+      budget: '₹18,75,000', 
       deadline: '2025-05-15', 
       status: 'open' as const,
       bidCount: 5
@@ -28,7 +28,7 @@ const Tenders = () => {
       id: 'T-2025-002', 
       title: 'Smart Traffic Control System', 
       department: 'Infrastructure', 
-      budget: '$500,000', 
+      budget: '₹37,50,000', 
       deadline: '2025-05-05', 
       status: 'open' as const,
       bidCount: 3
@@ -37,7 +37,7 @@ const Tenders = () => {
       id: 'T-2025-003', 
       title: 'E-Learning Platform', 
       department: 'Education', 
-      budget: '$175,000', 
+      budget: '₹13,12,500', 
       deadline: '2025-04-28', 
       status: 'closed' as const,
       bidCount: 10
@@ -46,7 +46,7 @@ const Tenders = () => {
       id: 'T-2025-004', 
       title: 'City Waste Management', 
       department: 'Municipal', 
-      budget: '$380,000', 
+      budget: '₹28,50,000', 
       deadline: '2025-04-20', 
       status: 'awarded' as const,
       bidCount: 8
@@ -55,7 +55,7 @@ const Tenders = () => {
       id: 'T-2025-005', 
       title: 'Public Library Renovation', 
       department: 'Education', 
-      budget: '$420,000', 
+      budget: '₹31,50,000', 
       deadline: '2025-05-22', 
       status: 'open' as const,
       bidCount: 0
@@ -64,7 +64,7 @@ const Tenders = () => {
       id: 'T-2025-006', 
       title: 'Solar Power Installation', 
       department: 'Energy', 
-      budget: '$1,200,000', 
+      budget: '₹90,00,000', 
       deadline: '2025-06-10', 
       status: 'open' as const,
       bidCount: 1
@@ -73,7 +73,7 @@ const Tenders = () => {
       id: 'T-2025-007', 
       title: 'City Park Renovation', 
       department: 'Parks & Recreation', 
-      budget: '$320,000', 
+      budget: '₹24,00,000', 
       deadline: '2025-04-15', 
       status: 'awarded' as const,
       bidCount: 6
@@ -82,7 +82,7 @@ const Tenders = () => {
       id: 'T-2025-008', 
       title: 'Public Transport Ticketing System', 
       department: 'Transportation', 
-      budget: '$290,000', 
+      budget: '₹21,75,000', 
       deadline: '2025-04-10', 
       status: 'disputed' as const,
       bidCount: 4
@@ -120,7 +120,7 @@ const Tenders = () => {
           </Button>
         </div>
         
-        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8 shadow-sm">
           <div className="flex flex-col md:flex-row gap-4 items-end">
             <div className="w-full md:w-2/3">
               <div className="relative">
@@ -185,10 +185,10 @@ const Tenders = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Any Budget</SelectItem>
-                    <SelectItem value="0-100k">$0 - $100,000</SelectItem>
-                    <SelectItem value="100k-500k">$100,000 - $500,000</SelectItem>
-                    <SelectItem value="500k-1m">$500,000 - $1,000,000</SelectItem>
-                    <SelectItem value="1m+">Over $1,000,000</SelectItem>
+                    <SelectItem value="0-100k">₹0 - ₹7,50,000</SelectItem>
+                    <SelectItem value="100k-500k">₹7,50,000 - ₹37,50,000</SelectItem>
+                    <SelectItem value="500k-1m">₹37,50,000 - ₹75,00,000</SelectItem>
+                    <SelectItem value="1m+">Over ₹75,00,000</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

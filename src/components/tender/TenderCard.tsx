@@ -37,8 +37,18 @@ const TenderCard = ({ id, title, department, budget, deadline, status, bidCount 
     return diffDays <= 3 && status === 'open';
   };
 
+  // Format budget to display ₹ symbol
+  const formatBudget = (budgetString: string) => {
+    // Extract numeric value and convert to INR format
+    const numericValue = budgetString.replace(/[^0-9]/g, '');
+    if (numericValue) {
+      return `₹${parseInt(numericValue).toLocaleString('en-IN')}`;
+    }
+    return budgetString;
+  };
+
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col hover:shadow-md transition-shadow duration-200">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-medium">{title}</CardTitle>
@@ -50,7 +60,7 @@ const TenderCard = ({ id, title, department, budget, deadline, status, bidCount 
         <div className="space-y-3">
           <div className="flex items-center">
             <Coins className="h-4 w-4 mr-2 text-blockchain-blue" />
-            <span className="text-sm">Budget: <span className="font-medium">{budget}</span></span>
+            <span className="text-sm">Budget: <span className="font-medium">{formatBudget(budget)}</span></span>
           </div>
           
           <div className="flex items-center">
