@@ -16,7 +16,7 @@ interface StatCardProps {
 const StatCard = ({ title, value, icon, trend, className }: StatCardProps) => {
   return (
     <div className={cn(
-      "bg-blockchain-panel rounded-lg p-6 border border-gray-800 relative overflow-hidden group",
+      "bg-blockchain-panel rounded-lg p-6 border border-gray-800 relative overflow-hidden group transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg hover:shadow-green-500/10",
       className
     )}>
       <div className="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

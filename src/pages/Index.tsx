@@ -6,11 +6,18 @@ import TenderStatusChart from "@/components/dashboard/TenderStatusChart";
 import RecentTendersTable from "@/components/dashboard/RecentTendersTable";
 import BlockchainVisualizer from "@/components/blockchain/BlockchainVisualizer";
 import { Button } from "@/components/ui/button";
-import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield } from "lucide-react";
+import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/layout/Footer";
+import { useState } from "react";
 
 const Index = () => {
+  // Animation states
+  const [showHero, setShowHero] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const [showCharts, setShowCharts] = useState(false);
+  const [showTenders, setShowTenders] = useState(false);
+
   // Mock data for demo purposes
   const chartData = [
     { name: 'Open', value: 12, color: '#4ADE80' },
@@ -112,22 +119,34 @@ const Index = () => {
     }
   ];
 
-  // Simulate blockchain network status
+  // Animation sequence
   useEffect(() => {
-    // This would be replaced with real blockchain monitoring
+    const timers = [
+      setTimeout(() => setShowHero(true), 100),
+      setTimeout(() => setShowStats(true), 500),
+      setTimeout(() => setShowCharts(true), 900),
+      setTimeout(() => setShowTenders(true), 1300),
+    ];
+
+    // Simulate blockchain network status
     const interval = setInterval(() => {
       console.log("Blockchain network status: Connected");
     }, 5000);
 
-    return () => clearInterval(interval);
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+      clearInterval(interval);
+    };
   }, []);
+
+  const fadeInClass = "transition-all duration-500 ease-out";
 
   return (
     <div className="min-h-screen bg-blockchain-darkBg text-white">
       <NavBar />
       
       {/* Hero Section */}
-      <div className="relative pt-20 pb-10 overflow-hidden">
+      <div className={`relative pt-20 pb-10 overflow-hidden ${fadeInClass} ${showHero ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="absolute inset-0 z-0 opacity-10 bg-grid-pattern bg-repeat"></div>
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-green-500/10 via-transparent to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-blue-500/10 via-transparent to-transparent"></div>
@@ -150,11 +169,12 @@ const Index = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
-                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-medium px-6 py-2.5"
+                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-medium px-6 py-2.5 hover:shadow-lg hover:shadow-green-500/20 transition-all"
                 asChild
               >
-                <Link to="/tenders">
+                <Link to="/tenders" className="group">
                   Explore Tenders
+                  <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button 
@@ -173,14 +193,14 @@ const Index = () => {
       
       <main className="container px-4 pb-16">
         {/* Network Status */}
-        <div className="flex items-center gap-2 mb-8">
+        <div className={`flex items-center gap-2 mb-8 ${fadeInClass} ${showHero ? 'opacity-100' : 'opacity-0'}`}>
           <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
           <span className="text-sm text-green-400">Blockchain Network Connected</span>
           <span className="text-xs text-gray-500 ml-2">Last block: 2 minutes ago</span>
         </div>
             
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 ${fadeInClass} ${showStats ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <StatCard 
             title="Active Tenders" 
             value="28" 
@@ -208,7 +228,7 @@ const Index = () => {
         </div>
         
         {/* Charts & Tables Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 ${fadeInClass} ${showCharts ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="lg:col-span-1">
             <TenderStatusChart data={chartData} />
           </div>
@@ -218,7 +238,7 @@ const Index = () => {
         </div>
         
         {/* Recent Tenders Table */}
-        <div className="mb-8">
+        <div className={`mb-8 ${fadeInClass} ${showTenders ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <RecentTendersTable tenders={recentTenders} />
         </div>
       </main>

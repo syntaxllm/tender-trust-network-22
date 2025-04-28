@@ -3,7 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Eye } from "lucide-react";
+import { Eye, Shield } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Tender {
   id: string;
@@ -19,6 +21,9 @@ interface RecentTendersTableProps {
 }
 
 const RecentTendersTable = ({ tenders }: RecentTendersTableProps) => {
+  const { toast } = useToast();
+  const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+
   const getStatusBadge = (status: Tender['status']) => {
     switch (status) {
       case 'open':
@@ -34,8 +39,15 @@ const RecentTendersTable = ({ tenders }: RecentTendersTableProps) => {
     }
   };
 
+  const verifyOnBlockchain = (id: string) => {
+    toast({
+      title: "Blockchain Verification",
+      description: `Tender ${id} is verified on the blockchain.`,
+    });
+  };
+
   return (
-    <div className="bg-blockchain-panel rounded-lg border border-gray-800">
+    <div className="bg-blockchain-panel rounded-lg border border-gray-800 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300">
       <div className="p-6">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-medium text-white">Recent Tenders</h3>
@@ -58,14 +70,32 @@ const RecentTendersTable = ({ tenders }: RecentTendersTableProps) => {
           </TableHeader>
           <TableBody>
             {tenders.map((tender) => (
-              <TableRow key={tender.id} className="hover:bg-gray-800/50 border-gray-800">
-                <TableCell className="font-medium text-white">{tender.title}</TableCell>
+              <TableRow 
+                key={tender.id} 
+                className={`border-gray-800 transition-colors duration-200 ${hoveredRow === tender.id ? 'bg-gray-800/70' : 'hover:bg-gray-800/30'}`}
+                onMouseEnter={() => setHoveredRow(tender.id)}
+                onMouseLeave={() => setHoveredRow(null)}
+              >
+                <TableCell className="font-medium text-white">
+                  <div className="flex items-center">
+                    {tender.title}
+                    {hoveredRow === tender.id && (
+                      <button 
+                        onClick={() => verifyOnBlockchain(tender.id)}
+                        className="ml-2 p-1 rounded-full bg-green-400/10 hover:bg-green-400/20 transition-colors"
+                        title="Verify on blockchain"
+                      >
+                        <Shield className="h-3 w-3 text-green-400" />
+                      </button>
+                    )}
+                  </div>
+                </TableCell>
                 <TableCell className="text-gray-300">{tender.department}</TableCell>
                 <TableCell className="text-gray-300">{tender.budget}</TableCell>
                 <TableCell className="text-gray-300">{tender.deadline}</TableCell>
                 <TableCell>{getStatusBadge(tender.status)}</TableCell>
                 <TableCell className="text-right">
-                  <Button asChild variant="ghost" size="sm" className="hover:bg-gray-800 hover:text-green-400">
+                  <Button asChild variant="ghost" size="sm" className={`hover:bg-gray-800 ${hoveredRow === tender.id ? 'text-green-400' : 'hover:text-green-400'}`}>
                     <Link to={`/tenders/${tender.id}`}>
                       <Eye className="h-4 w-4 mr-1" />
                       View
