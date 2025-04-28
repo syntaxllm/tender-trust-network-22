@@ -1,17 +1,19 @@
 
+import { useEffect } from "react";
 import NavBar from "@/components/layout/NavBar";
 import StatCard from "@/components/dashboard/StatCard";
 import TenderStatusChart from "@/components/dashboard/TenderStatusChart";
 import RecentTendersTable from "@/components/dashboard/RecentTendersTable";
 import BlockchainVisualizer from "@/components/blockchain/BlockchainVisualizer";
 import { Button } from "@/components/ui/button";
-import { FileText, TrendingUp, Users, AlertTriangle, Plus } from "lucide-react";
+import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
+import Footer from "@/components/layout/Footer";
 
 const Index = () => {
   // Mock data for demo purposes
   const chartData = [
-    { name: 'Open', value: 12, color: '#10B981' },
+    { name: 'Open', value: 12, color: '#4ADE80' },
     { name: 'Closed', value: 8, color: '#8E9196' },
     { name: 'Awarded', value: 6, color: '#8B5CF6' },
     { name: 'Disputed', value: 2, color: '#EF4444' },
@@ -22,7 +24,7 @@ const Index = () => {
       id: 'T-2025-001', 
       title: 'Hospital Management System', 
       department: 'Healthcare', 
-      budget: '$250,000', 
+      budget: '₹250,000', 
       deadline: '2025-05-15', 
       status: 'open' as const
     },
@@ -30,7 +32,7 @@ const Index = () => {
       id: 'T-2025-002', 
       title: 'Smart Traffic Control System', 
       department: 'Infrastructure', 
-      budget: '$500,000', 
+      budget: '₹500,000', 
       deadline: '2025-05-05', 
       status: 'open' as const
     },
@@ -38,7 +40,7 @@ const Index = () => {
       id: 'T-2025-003', 
       title: 'E-Learning Platform', 
       department: 'Education', 
-      budget: '$175,000', 
+      budget: '₹175,000', 
       deadline: '2025-04-28', 
       status: 'closed' as const
     },
@@ -46,7 +48,7 @@ const Index = () => {
       id: 'T-2025-004', 
       title: 'City Waste Management', 
       department: 'Municipal', 
-      budget: '$380,000', 
+      budget: '₹380,000', 
       deadline: '2025-04-20', 
       status: 'awarded' as const
     },
@@ -110,51 +112,97 @@ const Index = () => {
     }
   ];
 
+  // Simulate blockchain network status
+  useEffect(() => {
+    // This would be replaced with real blockchain monitoring
+    const interval = setInterval(() => {
+      console.log("Blockchain network status: Connected");
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blockchain-darkBg text-white">
       <NavBar />
       
-      <main className="container pt-20 pb-10">
-        <div className="flex justify-between items-center my-8">
-          <div>
-            <h1 className="text-3xl font-bold">Tender Management Dashboard</h1>
-            <p className="text-gray-600 mt-1">
-              Secure, transparent, and efficient tender process powered by blockchain
-            </p>
-          </div>
-          
-          <Button asChild className="bg-blockchain-blue hover:bg-blockchain-purple">
-            <Link to="/create-tender" className="flex items-center gap-1">
-              <Plus className="h-4 w-4" />
-              New Tender
-            </Link>
-          </Button>
-        </div>
+      {/* Hero Section */}
+      <div className="relative pt-20 pb-10 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-10 bg-grid-pattern bg-repeat"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-green-500/10 via-transparent to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-blue-500/10 via-transparent to-transparent"></div>
         
+        <div className="container relative z-10 pt-14 pb-8 px-4">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400 mb-4">
+              <Shield className="w-3.5 h-3.5 mr-1" />
+              Blockchain Powered Tender Management
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-400 to-purple-400">
+                Transform Government Tenders
+              </span> 
+              <br/>With Trustless Technology
+            </h1>
+            <p className="text-lg text-gray-300 md:text-xl max-w-3xl mb-8">
+              Our blockchain-powered platform ensures complete transparency, eliminates corruption, 
+              and streamlines the entire tender process from publication to award.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button 
+                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-medium px-6 py-2.5"
+                asChild
+              >
+                <Link to="/tenders">
+                  Explore Tenders
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-green-500/30 hover:border-green-500 text-white hover:text-green-400 bg-transparent"
+                asChild
+              >
+                <Link to="/create-tender">
+                  <Plus className="mr-2 h-4 w-4" /> Create New Tender
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main className="container px-4 pb-16">
+        {/* Network Status */}
+        <div className="flex items-center gap-2 mb-8">
+          <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
+          <span className="text-sm text-green-400">Blockchain Network Connected</span>
+          <span className="text-xs text-gray-500 ml-2">Last block: 2 minutes ago</span>
+        </div>
+            
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard 
             title="Active Tenders" 
             value="28" 
-            icon={<FileText className="h-5 w-5 text-blockchain-purple" />}
+            icon={<FileText className="h-5 w-5 text-green-400" />}
             trend={{ value: 12, isPositive: true }}
           />
           <StatCard 
             title="Total Value" 
-            value="$3.8M" 
-            icon={<TrendingUp className="h-5 w-5 text-blockchain-blue" />}
+            value="₹3.8M" 
+            icon={<TrendingUp className="h-5 w-5 text-blue-400" />}
             trend={{ value: 8, isPositive: true }}
           />
           <StatCard 
             title="Registered Vendors" 
             value="96" 
-            icon={<Users className="h-5 w-5 text-blockchain-blue" />}
+            icon={<Users className="h-5 w-5 text-purple-400" />}
             trend={{ value: 5, isPositive: true }}
           />
           <StatCard 
             title="Disputes" 
             value="2" 
-            icon={<AlertTriangle className="h-5 w-5 text-blockchain-red" />}
+            icon={<AlertTriangle className="h-5 w-5 text-red-400" />}
             trend={{ value: 1, isPositive: false }}
           />
         </div>
@@ -174,6 +222,8 @@ const Index = () => {
           <RecentTendersTable tenders={recentTenders} />
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 };
