@@ -1,8 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Bell, LogOut, Menu, User, Users, Wallet } from "lucide-react";
+import { Bell, LogOut, Menu, User, Users, Wallet, Shield, Gavel, Briefcase } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useWeb3 } from "@/contexts/Web3Context";
