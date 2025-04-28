@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
@@ -88,173 +87,204 @@ const NavBar = () => {
 
   if (!authState.user) {
     return <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
-        <div className="px-3 py-3 lg:px-6">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <div className="bg-gradient-to-r from-blockchain-blue to-blockchain-purple p-2 rounded-lg mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              </div>
-              <span className="text-xl font-semibold whitespace-nowrap">TrustChain</span>
-            </Link>
-            
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
-                <Wallet className="h-4 w-4" />
-                {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
-              </Button>
-
-              <Link to="/login">
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span>Login</span>
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>;
-  }
-
-  return <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
       <div className="px-3 py-3 lg:px-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <div className="bg-gradient-to-r from-blockchain-blue to-blockchain-purple p-2 rounded-lg mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              </div>
-              <span className="text-xl font-semibold whitespace-nowrap">TrustChain</span>
-            </Link>
-          </div>
-          
-          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
-            <div className={`
-              px-4 py-1.5 rounded-full text-white text-sm font-medium shadow-md border border-white/10
-              ${authState.user.role === "admin" 
-                ? "bg-gradient-to-r from-blockchain-purple to-blockchain-darkPurple" 
-                : authState.user.role === "officer" 
-                ? "bg-gradient-to-r from-blockchain-blue to-blue-600" 
-                : "bg-gradient-to-r from-blockchain-green to-emerald-600"}
-            `}>
-              <span className="flex items-center gap-1.5">
-                {authState.user.role === "admin" ? (
-                  <>
-                    <Shield className="w-4 h-4" />
-                    TrustChain Administrator
-                  </>
-                ) : authState.user.role === "officer" ? (
-                  <>
-                    <Gavel className="w-4 h-4" />
-                    TrustChain Officer
-                  </>
-                ) : (
-                  <>
-                    <Briefcase className="w-4 h-4" />
-                    TrustChain Bidder
-                  </>
-                )}
-              </span>
+          <Link to="/" className="flex items-center">
+            <div className="bg-gradient-to-r from-[#FF671F] to-[#046A38] p-2 rounded-lg mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
             </div>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-6">
-            {getMenuItems().map(item => <Link key={item.path} to={item.path} className="text-gray-600 hover:text-blockchain-purple transition-colors">
-                {item.title}
-              </Link>)}
-          </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-semibold whitespace-nowrap text-[#000080]">TrustChain</span>
+              <div className={`
+                px-2 py-0.5 mt-1 rounded-full text-white text-xs font-medium
+                ${authState.user.role === "admin" 
+                  ? "bg-gradient-to-r from-[#FF671F] to-[#FF9933]" 
+                  : authState.user.role === "officer" 
+                  ? "bg-gradient-to-r from-[#000080] to-[#0000FF]" 
+                  : "bg-gradient-to-r from-[#046A38] to-[#138808]"}
+              `}>
+                <span className="flex items-center gap-1">
+                  {authState.user.role === "admin" ? (
+                    <>
+                      <Shield className="w-3 h-3" />
+                      TrustChain Administrator
+                    </>
+                  ) : authState.user.role === "officer" ? (
+                    <>
+                      <Gavel className="w-3 h-3" />
+                      TrustChain Officer
+                    </>
+                  ) : (
+                    <>
+                      <Briefcase className="w-3 h-3" />
+                      TrustChain Bidder
+                    </>
+                  )}
+                </span>
+              </div>
+            </div>
+          </Link>
           
           <div className="flex items-center gap-4">
-            <Button variant={isConnected ? "secondary" : "default"} size="sm" className={`${isConnected ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-blockchain-blue hover:bg-blockchain-purple'} hidden md:flex items-center gap-2`} onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
+            <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
               <Wallet className="h-4 w-4" />
               {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
             </Button>
-            
-            <Button variant="ghost" size="icon" onClick={handleNotificationClick} className="relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-0 right-0 h-2 w-2 bg-blockchain-red rounded-full"></span>
-            </Button>
-            
-            <div className="flex items-center gap-3">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <div className="flex items-center gap-3 cursor-pointer">
-                    <div className="hidden md:block text-right">
-                      <div className="text-sm font-medium">{authState.user.name}</div>
-                      <div className="text-xs text-gray-500">{authState.user.username}</div>
-                    </div>
-                    
-                    <Avatar>
-                      <AvatarImage src="" />
-                      <AvatarFallback className={`
-                        text-white
-                        ${authState.user.role === "admin" ? "bg-blockchain-purple" : authState.user.role === "officer" ? "bg-blockchain-blue" : "bg-blockchain-green"}
-                      `}>
-                        {getInitials()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  {authState.user.role === "bidder" && <DropdownMenuItem>
-                      <Wallet className="mr-2 h-4 w-4" />
-                      My Bids
-                    </DropdownMenuItem>}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              <Button variant="ghost" size="icon" onClick={handleLogout} className="hidden md:flex">
-                <LogOut className="h-5 w-5" />
-              </Button>
-            </div>
 
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMobileMenu}>
-              <Menu className="h-6 w-6" />
-            </Button>
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                <span>Login</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
-      
-      {isMobileMenuOpen && <div className="md:hidden bg-white border-t border-gray-100 animate-slide-in">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {getMenuItems().map(item => <Link key={item.path} to={item.path} className="block px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-                {item.title}
-              </Link>)}
+    </nav>;
+  }
+
+  return <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0 left-0 shadow-sm">
+    <div className="px-3 py-3 lg:px-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center">
+            <div className="bg-gradient-to-r from-[#FF671F] to-[#046A38] p-2 rounded-lg mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-semibold whitespace-nowrap text-[#000080]">TrustChain</span>
+              <div className={`
+                px-2 py-0.5 mt-1 rounded-full text-white text-xs font-medium
+                ${authState.user.role === "admin" 
+                  ? "bg-gradient-to-r from-[#FF671F] to-[#FF9933]" 
+                  : authState.user.role === "officer" 
+                  ? "bg-gradient-to-r from-[#000080] to-[#0000FF]" 
+                  : "bg-gradient-to-r from-[#046A38] to-[#138808]"}
+              `}>
+                <span className="flex items-center gap-1">
+                  {authState.user.role === "admin" ? (
+                    <>
+                      <Shield className="w-3 h-3" />
+                      TrustChain Administrator
+                    </>
+                  ) : authState.user.role === "officer" ? (
+                    <>
+                      <Gavel className="w-3 h-3" />
+                      TrustChain Officer
+                    </>
+                  ) : (
+                    <>
+                      <Briefcase className="w-3 h-3" />
+                      TrustChain Bidder
+                    </>
+                  )}
+                </span>
+              </div>
+            </div>
+          </Link>
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6">
+          {getMenuItems().map(item => <Link key={item.path} to={item.path} className="text-gray-600 hover:text-blockchain-purple transition-colors">
+              {item.title}
+            </Link>)}
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <Button variant={isConnected ? "secondary" : "default"} size="sm" className={`${isConnected ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-blockchain-blue hover:bg-blockchain-purple'} hidden md:flex items-center gap-2`} onClick={isConnected ? disconnectWallet : connectWallet} disabled={isConnecting}>
+            <Wallet className="h-4 w-4" />
+            {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
+          </Button>
+          
+          <Button variant="ghost" size="icon" onClick={handleNotificationClick} className="relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute top-0 right-0 h-2 w-2 bg-blockchain-red rounded-full"></span>
+          </Button>
+          
+          <div className="flex items-center gap-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center gap-3 cursor-pointer">
+                  <div className="hidden md:block text-right">
+                    <div className="text-sm font-medium">{authState.user.name}</div>
+                    <div className="text-xs text-gray-500">{authState.user.username}</div>
+                  </div>
+                  
+                  <Avatar>
+                    <AvatarImage src="" />
+                    <AvatarFallback className={`
+                      text-white
+                      ${authState.user.role === "admin" ? "bg-blockchain-purple" : authState.user.role === "officer" ? "bg-blockchain-blue" : "bg-blockchain-green"}
+                    `}>
+                      {getInitials()}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <User className="mr-2 h-4 w-4" />
+                  Profile
+                </DropdownMenuItem>
+                {authState.user.role === "bidder" && <DropdownMenuItem>
+                    <Wallet className="mr-2 h-4 w-4" />
+                    My Bids
+                  </DropdownMenuItem>}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
+            <Button variant="ghost" size="icon" onClick={handleLogout} className="hidden md:flex">
+              <LogOut className="h-5 w-5" />
+            </Button>
+          </div>
+
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMobileMenu}>
+            <Menu className="h-6 w-6" />
+          </Button>
+        </div>
+      </div>
+    </div>
+    
+    {isMobileMenuOpen && (
+      <div className="md:hidden bg-white border-t border-gray-100 animate-slide-in">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {getMenuItems().map(item => <Link key={item.path} to={item.path} className="block px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
+              {item.title}
+            </Link>)}
+          
             <Button variant={isConnected ? "outline" : "default"} size="sm" className="w-full justify-start px-3 py-2 mt-2" onClick={e => {
-          e.preventDefault();
-          isConnected ? disconnectWallet() : connectWallet();
-        }} disabled={isConnecting}>
+              e.preventDefault();
+              isConnected ? disconnectWallet() : connectWallet();
+            }} disabled={isConnecting}>
               <Wallet className="mr-2 h-4 w-4" />
               {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
             </Button>
             
             <button className="w-full flex items-center px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md" onClick={() => {
-          setIsMobileMenuOpen(false);
-          handleLogout();
-        }}>
+              setIsMobileMenuOpen(false);
+              handleLogout();
+            }}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>
             </button>
           </div>
-        </div>}
-    </nav>;
+        </div>
+      </div>
+    )}
+  </nav>;
 };
 
 export default NavBar;

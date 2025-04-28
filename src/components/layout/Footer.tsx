@@ -11,13 +11,13 @@ const Footer = () => {
           {/* About Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-r from-blockchain-blue to-blockchain-purple p-2 rounded-lg">
+              <div className="bg-gradient-to-r from-[#FF671F] to-[#046A38] p-2 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold">TrustChain</h3>
+              <h3 className="text-xl font-bold text-[#000080]">TrustChain</h3>
             </div>
             <p className="text-gray-600 text-sm">
               Revolutionizing government procurement through blockchain technology. 
@@ -27,25 +27,25 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4 text-[#000080]">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/about" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+                <Link to="/about" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/tenders" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+                <Link to="/tenders" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                   Active Tenders
                 </Link>
               </li>
               <li>
-                <Link to="/help" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+                <Link to="/help" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link to="/faqs" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+                <Link to="/faqs" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                   FAQs
                 </Link>
               </li>
@@ -54,22 +54,22 @@ const Footer = () => {
 
           {/* Contact Information */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
+            <h4 className="font-semibold mb-4 text-[#000080]">Contact Us</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2 text-gray-600">
-                <MapPin className="w-4 h-4 text-blockchain-purple" />
+                <MapPin className="w-4 h-4 text-[#FF671F]" />
                 Block 3, CGO Complex, New Delhi
               </li>
               <li className="flex items-center gap-2 text-gray-600">
-                <Phone className="w-4 h-4 text-blockchain-purple" />
+                <Phone className="w-4 h-4 text-[#FF671F]" />
                 1800-123-4567
               </li>
               <li className="flex items-center gap-2 text-gray-600">
-                <Mail className="w-4 h-4 text-blockchain-purple" />
+                <Mail className="w-4 h-4 text-[#FF671F]" />
                 support@trustchain.gov.in
               </li>
               <li className="flex items-center gap-2 text-gray-600">
-                <Globe className="w-4 h-4 text-blockchain-purple" />
+                <Globe className="w-4 h-4 text-[#FF671F]" />
                 www.trustchain.gov.in
               </li>
             </ul>
@@ -77,18 +77,18 @@ const Footer = () => {
 
           {/* Social Media */}
           <div>
-            <h4 className="font-semibold mb-4">Connect With Us</h4>
+            <h4 className="font-semibold mb-4 text-[#000080]">Connect With Us</h4>
             <div className="flex gap-4">
-              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-blockchain-purple hover:text-white transition-colors">
+              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-[#FF671F] hover:text-white transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-blockchain-purple hover:text-white transition-colors">
+              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-[#FF671F] hover:text-white transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-blockchain-purple hover:text-white transition-colors">
+              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-[#FF671F] hover:text-white transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-blockchain-purple hover:text-white transition-colors">
+              <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-[#FF671F] hover:text-white transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
             </div>
@@ -102,13 +102,13 @@ const Footer = () => {
               © {new Date().getFullYear()} TrustChain. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <Link to="/privacy" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+              <Link to="/privacy" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+              <Link to="/terms" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                 Terms of Use
               </Link>
-              <Link to="/sitemap" className="text-gray-600 hover:text-blockchain-purple transition-colors">
+              <Link to="/sitemap" className="text-gray-600 hover:text-[#FF671F] transition-colors">
                 Sitemap
               </Link>
             </div>
