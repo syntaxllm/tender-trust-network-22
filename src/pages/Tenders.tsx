@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 import NavBar from "@/components/layout/NavBar";
+import Footer from "@/components/layout/Footer";
 import TenderCard from "@/components/tender/TenderCard";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -100,10 +100,10 @@ const Tenders = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <NavBar />
       
-      <main className="container pt-20 pb-10">
+      <main className="container flex-1 pt-20 pb-10">
         <div className="flex justify-between items-center my-8">
           <div>
             <h1 className="text-3xl font-bold">Tenders</h1>
@@ -285,6 +285,8 @@ const Tenders = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      <Footer />
     </div>
   );
 };
