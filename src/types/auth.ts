@@ -8,6 +8,7 @@ export interface User {
   username: string;
   role: UserRole;
   createdAt: Date;
+  walletAddress?: string; // Added wallet address field
 }
 
 export interface AuthState {

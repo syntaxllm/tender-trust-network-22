@@ -3,13 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Bell, LogOut, Menu, User, Users } from "lucide-react";
+import { Bell, LogOut, Menu, User, Users, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useWeb3 } from "@/contexts/Web3Context";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const NavBar = () => {
   const { toast } = useToast();
   const { authState, logout } = useAuth();
+  const { account, isConnected, connectWallet, disconnectWallet, isConnecting } = useWeb3();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -27,6 +37,12 @@ const NavBar = () => {
   const handleLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  // Format wallet address for display
+  const formatWalletAddress = () => {
+    if (!account) return "";
+    return `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
   };
 
   // Get initials for avatar fallback
@@ -104,12 +120,25 @@ const NavBar = () => {
               <span className="text-xl font-semibold whitespace-nowrap">TrustChain</span>
             </Link>
             
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                <span>Login</span>
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2"
+                onClick={isConnected ? disconnectWallet : connectWallet}
+                disabled={isConnecting}
+              >
+                <Wallet className="h-4 w-4" />
+                {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
               </Button>
-            </Link>
+
+              <Link to="/login">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span>Login</span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -161,6 +190,18 @@ const NavBar = () => {
           </div>
           
           <div className="flex items-center gap-4">
+            {/* Wallet button */}
+            <Button 
+              variant={isConnected ? "secondary" : "default"}
+              size="sm" 
+              className={`${isConnected ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-blockchain-blue hover:bg-blockchain-purple'} hidden md:flex items-center gap-2`}
+              onClick={isConnected ? disconnectWallet : connectWallet}
+              disabled={isConnecting}
+            >
+              <Wallet className="h-4 w-4" />
+              {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
+            </Button>
+            
             <Button 
               variant="ghost" 
               size="icon"
@@ -172,22 +213,47 @@ const NavBar = () => {
             </Button>
             
             <div className="flex items-center gap-3">
-              <div className="hidden md:block text-right">
-                <div className="text-sm font-medium">{authState.user.name}</div>
-                <div className="text-xs text-gray-500">{authState.user.username}</div>
-              </div>
-              
-              <Avatar>
-                <AvatarImage src="" />
-                <AvatarFallback className={`
-                  text-white
-                  ${authState.user.role === "admin" ? "bg-blockchain-purple" : 
-                    authState.user.role === "officer" ? "bg-blockchain-blue" : 
-                    "bg-blockchain-green"}
-                `}>
-                  {getInitials()}
-                </AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center gap-3 cursor-pointer">
+                    <div className="hidden md:block text-right">
+                      <div className="text-sm font-medium">{authState.user.name}</div>
+                      <div className="text-xs text-gray-500">{authState.user.username}</div>
+                    </div>
+                    
+                    <Avatar>
+                      <AvatarImage src="" />
+                      <AvatarFallback className={`
+                        text-white
+                        ${authState.user.role === "admin" ? "bg-blockchain-purple" : 
+                          authState.user.role === "officer" ? "bg-blockchain-blue" : 
+                          "bg-blockchain-green"}
+                      `}>
+                        {getInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </DropdownMenuItem>
+                  {authState.user.role === "bidder" && (
+                    <DropdownMenuItem>
+                      <Wallet className="mr-2 h-4 w-4" />
+                      My Bids
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               
               <Button 
                 variant="ghost" 
@@ -225,6 +291,21 @@ const NavBar = () => {
                 {item.title}
               </Link>
             ))}
+            
+            {/* Mobile wallet connect button */}
+            <Button 
+              variant={isConnected ? "outline" : "default"}
+              size="sm" 
+              className="w-full justify-start px-3 py-2 mt-2"
+              onClick={(e) => {
+                e.preventDefault();
+                isConnected ? disconnectWallet() : connectWallet();
+              }}
+              disabled={isConnecting}
+            >
+              <Wallet className="mr-2 h-4 w-4" />
+              {isConnecting ? "Connecting..." : isConnected ? formatWalletAddress() : "Connect Wallet"}
+            </Button>
             
             <button
               className="w-full flex items-center px-3 py-2 text-gray-600 hover:bg-blockchain-lightPurple hover:text-blockchain-purple rounded-md"

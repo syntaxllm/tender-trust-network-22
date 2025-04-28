@@ -2,17 +2,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useWeb3 } from "@/contexts/Web3Context";
 import { UserRole } from "@/types/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge, BadgeDollarSign, BadgeIndianRupee, Key, User } from "lucide-react";
+import { Badge, BadgeDollarSign, BadgeIndianRupee, Key, User, Wallet, Loader2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, register, authState } = useAuth();
+  const { isConnected, connectWallet, account, isConnecting } = useWeb3();
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   
   // Login form state
@@ -36,6 +39,12 @@ const Login = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (registerRole === "bidder" && !isConnected) {
+      alert("Bidders must connect a wallet to register. Please connect your wallet first.");
+      return;
+    }
+    
     const success = await register(
       registerUsername,
       registerPassword,
@@ -46,6 +55,12 @@ const Login = () => {
     if (success) {
       navigate("/");
     }
+  };
+
+  // Format wallet address for display
+  const formatWalletAddress = () => {
+    if (!account) return "";
+    return `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
   };
 
   return (
@@ -64,6 +79,35 @@ const Login = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4">
+            <Button
+              onClick={isConnected ? () => {} : connectWallet}
+              disabled={isConnecting}
+              className={`w-full ${
+                isConnected 
+                  ? "bg-green-100 text-green-800 hover:bg-green-100 cursor-default" 
+                  : "bg-blockchain-blue hover:bg-blockchain-purple"
+              }`}
+            >
+              {isConnecting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Connecting Wallet...
+                </>
+              ) : isConnected ? (
+                <>
+                  <Wallet className="mr-2 h-4 w-4" />
+                  Connected: {formatWalletAddress()}
+                </>
+              ) : (
+                <>
+                  <Wallet className="mr-2 h-4 w-4" />
+                  Connect Wallet
+                </>
+              )}
+            </Button>
+          </div>
+          
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "login" | "register")}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="login">Login</TabsTrigger>
@@ -141,6 +185,14 @@ const Login = () => {
             
             <TabsContent value="register">
               <form onSubmit={handleRegister} className="space-y-4 mt-4">
+                {registerRole === "bidder" && !isConnected && (
+                  <Alert className="bg-amber-50 border-amber-200 text-amber-800 mb-4">
+                    <AlertDescription className="text-sm">
+                      Bidders must connect a wallet to register. Please connect your wallet at the top of this page.
+                    </AlertDescription>
+                  </Alert>
+                )}
+                
                 <div className="space-y-2">
                   <Label htmlFor="register-name">Full Name</Label>
                   <Input
@@ -201,10 +253,17 @@ const Login = () => {
                   </div>
                 </div>
                 
+                {isConnected && (
+                  <div className="rounded-md bg-gray-50 p-3 border border-gray-200">
+                    <div className="text-sm font-medium mb-1">Connected Wallet</div>
+                    <div className="text-xs text-gray-500 break-all">{account}</div>
+                  </div>
+                )}
+                
                 <Button 
                   type="submit" 
                   className="w-full bg-blockchain-blue hover:bg-blockchain-purple" 
-                  disabled={authState.isLoading}
+                  disabled={authState.isLoading || (registerRole === "bidder" && !isConnected)}
                 >
                   {authState.isLoading ? "Creating Account..." : "Create Account"}
                 </Button>

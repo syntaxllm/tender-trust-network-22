@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CustomCursor from "./components/ui/CustomCursor";
 import { AuthProvider } from "./contexts/AuthContext";
+import { Web3Provider } from "./contexts/Web3Context";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Pages
@@ -26,66 +27,68 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <CustomCursor />
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Public route */}
-            <Route path="/login" element={<Login />} />
-            
-            {/* Protected routes for all authenticated users */}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            } />
-            <Route path="/tenders" element={
-              <ProtectedRoute>
-                <Tenders />
-              </ProtectedRoute>
-            } />
-            <Route path="/tenders/:id" element={
-              <ProtectedRoute>
-                <TenderDetails />
-              </ProtectedRoute>
-            } />
-            
-            {/* Bidder-specific routes */}
-            <Route path="/tenders/:id/bid" element={
-              <ProtectedRoute allowedRoles={["bidder"]}>
-                <SubmitBid />
-              </ProtectedRoute>
-            } />
-            <Route path="/my-bids" element={
-              <ProtectedRoute allowedRoles={["bidder"]}>
-                <MyBids />
-              </ProtectedRoute>
-            } />
-            
-            {/* Admin and Officer routes */}
-            <Route path="/create-tender" element={
-              <ProtectedRoute allowedRoles={["admin", "officer"]}>
-                <CreateTender />
-              </ProtectedRoute>
-            } />
-            <Route path="/reports" element={
-              <ProtectedRoute allowedRoles={["admin", "officer"]}>
-                <Reports />
-              </ProtectedRoute>
-            } />
-            
-            {/* Admin-only routes */}
-            <Route path="/manage-officers" element={
-              <ProtectedRoute allowedRoles={["admin"]}>
-                <ManageOfficers />
-              </ProtectedRoute>
-            } />
-            
-            {/* Not found route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <Web3Provider>
+          <CustomCursor />
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Public route */}
+              <Route path="/login" element={<Login />} />
+              
+              {/* Protected routes for all authenticated users */}
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Index />
+                </ProtectedRoute>
+              } />
+              <Route path="/tenders" element={
+                <ProtectedRoute>
+                  <Tenders />
+                </ProtectedRoute>
+              } />
+              <Route path="/tenders/:id" element={
+                <ProtectedRoute>
+                  <TenderDetails />
+                </ProtectedRoute>
+              } />
+              
+              {/* Bidder-specific routes */}
+              <Route path="/tenders/:id/bid" element={
+                <ProtectedRoute allowedRoles={["bidder"]}>
+                  <SubmitBid />
+                </ProtectedRoute>
+              } />
+              <Route path="/my-bids" element={
+                <ProtectedRoute allowedRoles={["bidder"]}>
+                  <MyBids />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin and Officer routes */}
+              <Route path="/create-tender" element={
+                <ProtectedRoute allowedRoles={["admin", "officer"]}>
+                  <CreateTender />
+                </ProtectedRoute>
+              } />
+              <Route path="/reports" element={
+                <ProtectedRoute allowedRoles={["admin", "officer"]}>
+                  <Reports />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin-only routes */}
+              <Route path="/manage-officers" element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <ManageOfficers />
+                </ProtectedRoute>
+              } />
+              
+              {/* Not found route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </Web3Provider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
