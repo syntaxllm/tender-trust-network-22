@@ -266,6 +266,39 @@
   .button-glow:hover {
     box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
   }
+
+  /* New animations for login page */
+  .text-shadow-sm {
+    text-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+  }
+  
+  @keyframes moveLeftToRight {
+    0% {
+      transform: translateX(-10px);
+    }
+    100% {
+      transform: translateX(calc(100vw + 10px));
+    }
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(74, 222, 128, 0.3);
+    transform: scale(0);
+    animation: ripple 0.8s linear;
+  }
 }
 
 @keyframes trail-fade {
