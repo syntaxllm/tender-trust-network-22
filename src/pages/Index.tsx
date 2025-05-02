@@ -1,10 +1,10 @@
-
 import { useEffect } from "react";
 import NavBar from "@/components/layout/NavBar";
 import StatCard from "@/components/dashboard/StatCard";
 import TenderStatusChart from "@/components/dashboard/TenderStatusChart";
 import RecentTendersTable from "@/components/dashboard/RecentTendersTable";
 import BlockchainVisualizer from "@/components/blockchain/BlockchainVisualizer";
+import BiddingProcessIllustration from "@/components/illustrations/BiddingProcessIllustration";
 import { Button } from "@/components/ui/button";
 import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ const Index = () => {
   const [showStats, setShowStats] = useState(false);
   const [showCharts, setShowCharts] = useState(false);
   const [showTenders, setShowTenders] = useState(false);
+  const [showIllustration, setShowIllustration] = useState(false);
 
   // Mock data for demo purposes
   const chartData = [
@@ -125,6 +126,7 @@ const Index = () => {
       setTimeout(() => setShowHero(true), 100),
       setTimeout(() => setShowStats(true), 500),
       setTimeout(() => setShowCharts(true), 900),
+      setTimeout(() => setShowIllustration(true), 1100),
       setTimeout(() => setShowTenders(true), 1300),
     ];
 
@@ -235,6 +237,15 @@ const Index = () => {
           <div className="lg:col-span-2">
             <BlockchainVisualizer blocks={blockchainBlocks} />
           </div>
+        </div>
+
+        {/* BiddingProcessIllustration below TenderStatusChart */}
+        <div className={`mb-8 bg-blockchain-panel p-6 rounded-lg border border-gray-800 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 ${fadeInClass} ${showIllustration ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="mb-4">
+            <h3 className="text-lg font-medium text-white">Tender Bidding Process</h3>
+            <p className="text-sm text-gray-400">Step-by-step visualization of the tender process flow</p>
+          </div>
+          <BiddingProcessIllustration />
         </div>
         
         {/* Recent Tenders Table */}

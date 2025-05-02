@@ -87,11 +87,6 @@ const TenderStatusChart = ({ data }: TenderStatusChartProps) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      
-      {/* Bidding Process Illustration */}
-      <div className="mt-4 pt-4 border-t border-gray-800">
-        <BiddingProcessIllustration />
-      </div>
     </div>
   );
 };
