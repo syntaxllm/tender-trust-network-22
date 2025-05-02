@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -12,6 +11,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge, BadgeDollarSign, BadgeIndianRupee, Key, User, Wallet, Loader2, LockKeyhole, Mail, UserCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import BlockchainNetwork from "@/components/illustrations/BlockchainNetwork";
+import ContractIllustration from "@/components/illustrations/ContractIllustration";
+import TenderPulseAnimation from "@/components/illustrations/TenderPulseAnimation";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -85,6 +87,9 @@ const Login = () => {
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       
+      {/* Blockchain Network Animation */}
+      <BlockchainNetwork />
+      
       {/* Floating particles */}
       {particles.map((_, index) => (
         <div 
@@ -115,6 +120,16 @@ const Login = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-blockchain-accent/10 to-blockchain-highlight/5"></div>
         </div>
       ))}
+      
+      {/* Contract Illustration in top left corner */}
+      <div className="absolute top-10 left-10 w-[300px] transform -translate-x-1/3 -translate-y-1/3 opacity-70 hidden md:block">
+        <ContractIllustration />
+      </div>
+      
+      {/* Tender Pulse Animation in bottom right corner */}
+      <div className="absolute bottom-10 right-10 w-[300px] transform translate-x-1/3 translate-y-1/3 opacity-70 hidden md:block">
+        <TenderPulseAnimation />
+      </div>
       
       {/* Animated blockchain chain visualization */}
       <div className="absolute left-0 right-0 top-[20%] flex items-center justify-center pointer-events-none">
