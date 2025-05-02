@@ -1,7 +1,6 @@
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useState } from 'react';
-import BiddingProcessIllustration from '@/components/illustrations/BiddingProcessIllustration';
 
 interface TenderStatusChartProps {
   data: {

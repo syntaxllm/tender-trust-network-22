@@ -5,6 +5,7 @@ import TenderStatusChart from "@/components/dashboard/TenderStatusChart";
 import RecentTendersTable from "@/components/dashboard/RecentTendersTable";
 import BlockchainVisualizer from "@/components/blockchain/BlockchainVisualizer";
 import BiddingProcessIllustration from "@/components/illustrations/BiddingProcessIllustration";
+import ContractIllustration from "@/components/illustrations/ContractIllustration";
 import { Button } from "@/components/ui/button";
 import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -154,40 +155,46 @@ const Index = () => {
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-blue-500/10 via-transparent to-transparent"></div>
         
         <div className="container relative z-10 pt-14 pb-8 px-4">
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400 mb-4">
-              <Shield className="w-3.5 h-3.5 mr-1" />
-              Blockchain Powered Tender Management
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-400/10 text-green-400 mb-4">
+                <Shield className="w-3.5 h-3.5 mr-1" />
+                Blockchain Powered Tender Management
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-400 to-purple-400">
+                  Transform Government Tenders
+                </span> 
+                <br/>With Trustless Technology
+              </h1>
+              <p className="text-lg text-gray-300 md:text-xl max-w-3xl mb-8">
+                Our blockchain-powered platform ensures complete transparency, eliminates corruption, 
+                and streamlines the entire tender process from publication to award.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-medium px-6 py-2.5 hover:shadow-lg hover:shadow-green-500/20 transition-all"
+                  asChild
+                >
+                  <Link to="/tenders" className="group">
+                    Explore Tenders
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-green-500/30 hover:border-green-500 text-white hover:text-green-400 bg-transparent"
+                  asChild
+                >
+                  <Link to="/create-tender">
+                    <Plus className="mr-2 h-4 w-4" /> Create New Tender
+                  </Link>
+                </Button>
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-400 to-purple-400">
-                Transform Government Tenders
-              </span> 
-              <br/>With Trustless Technology
-            </h1>
-            <p className="text-lg text-gray-300 md:text-xl max-w-3xl mb-8">
-              Our blockchain-powered platform ensures complete transparency, eliminates corruption, 
-              and streamlines the entire tender process from publication to award.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button 
-                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-medium px-6 py-2.5 hover:shadow-lg hover:shadow-green-500/20 transition-all"
-                asChild
-              >
-                <Link to="/tenders" className="group">
-                  Explore Tenders
-                  <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-green-500/30 hover:border-green-500 text-white hover:text-green-400 bg-transparent"
-                asChild
-              >
-                <Link to="/create-tender">
-                  <Plus className="mr-2 h-4 w-4" /> Create New Tender
-                </Link>
-              </Button>
+            
+            <div className="w-full md:w-auto md:flex-1 flex justify-center md:justify-end animate-fade-in" style={{ animationDelay: "0.5s" }}>
+              <ContractIllustration />
             </div>
           </div>
         </div>
