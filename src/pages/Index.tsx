@@ -6,6 +6,7 @@ import RecentTendersTable from "@/components/dashboard/RecentTendersTable";
 import BlockchainVisualizer from "@/components/blockchain/BlockchainVisualizer";
 import BiddingProcessIllustration from "@/components/illustrations/BiddingProcessIllustration";
 import ContractIllustration from "@/components/illustrations/ContractIllustration";
+import TenderDataVisualization from "@/components/illustrations/TenderDataVisualization";
 import { Button } from "@/components/ui/button";
 import { FileText, TrendingUp, Users, AlertTriangle, Plus, Shield, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -19,6 +20,7 @@ const Index = () => {
   const [showCharts, setShowCharts] = useState(false);
   const [showTenders, setShowTenders] = useState(false);
   const [showIllustration, setShowIllustration] = useState(false);
+  const [showDataViz, setShowDataViz] = useState(false);
 
   // Mock data for demo purposes
   const chartData = [
@@ -128,7 +130,8 @@ const Index = () => {
       setTimeout(() => setShowStats(true), 500),
       setTimeout(() => setShowCharts(true), 900),
       setTimeout(() => setShowIllustration(true), 1100),
-      setTimeout(() => setShowTenders(true), 1300),
+      setTimeout(() => setShowDataViz(true), 1300),
+      setTimeout(() => setShowTenders(true), 1500),
     ];
 
     // Simulate blockchain network status
@@ -240,13 +243,24 @@ const Index = () => {
         <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 ${fadeInClass} ${showCharts ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="lg:col-span-1">
             <TenderStatusChart data={chartData} />
+            
+            {/* New Tender Data Visualization below the chart */}
+            <div className={`mt-8 ${fadeInClass} ${showDataViz ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <div className="bg-blockchain-panel p-6 rounded-lg border border-gray-800 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300">
+                <div className="mb-4">
+                  <h3 className="text-lg font-medium text-white">Tender Data Metrics</h3>
+                  <p className="text-sm text-gray-400">Key performance indicators</p>
+                </div>
+                <TenderDataVisualization />
+              </div>
+            </div>
           </div>
           <div className="lg:col-span-2">
             <BlockchainVisualizer blocks={blockchainBlocks} />
           </div>
         </div>
 
-        {/* BiddingProcessIllustration below TenderStatusChart */}
+        {/* BiddingProcessIllustration */}
         <div className={`mb-8 bg-blockchain-panel p-6 rounded-lg border border-gray-800 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 ${fadeInClass} ${showIllustration ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="mb-4">
             <h3 className="text-lg font-medium text-white">Tender Bidding Process</h3>
