@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Bid - Smart Contract Management System</title>
+    <link rel="stylesheet" href="{% static 'dark-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'common.css' %}">
+    <link rel="stylesheet" href="{% static 'modern.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+    function validate() {
+        var bidAmount = document.forms["bidForm"]["t2"].value;
+        
+        if (bidAmount == null || bidAmount == "") {
+            window.alert("Please enter a bid amount");
+            document.bidForm.t2.focus();
+            return false;
+        }
+        
+        if (isNaN(bidAmount)) {
+            window.alert("Bid amount must be a number");
+            document.bidForm.t2.focus();
+            return false;
+        }
+        
+        return true;
+    }
+    </script>
+</head>
+<body>
+<div id="wrapper">
+  <div id="header">
+    <div class="container">
+      <div id="logo">
+        <h1>Smart Tender/Contract Management System</h1>
+        <p>Powered by Blockchain Technology</p>
+      </div>
+    </div>
+  </div>
+  
+  <div id="menu">
+    <div class="container">
+      <ul>
+        <li><a href="{% url 'BidTender' %}" class="active"><i class="fas fa-gavel"></i> Bid Tender</a></li>
+        <li><a href="{% url 'ViewTender' %}"><i class="fas fa-search"></i> View Tender Status</a></li>
+        <li><a href="{% url 'index' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div id="page">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center"><i class="fas fa-gavel"></i> Submit Your Bid</h3>
+        </div>
+        
+        <div class="card-body">
+          {% if data %}
+            <div class="alert-message mb-3">{{ data }}</div>
+          {% endif %}
+          
+          <form name="bidForm" method="post" action="{% url 'BidTenderActionPage' %}" onsubmit="return validate()">
+            {% csrf_token %}
+            
+            <div class="tender-details mb-4">
+              {{ data1|safe }}
+            </div>
+            
+            <div class="form-group">
+              <label for="bidAmount"><i class="fas fa-dollar-sign"></i> Bid Amount</label>
+              <input type="text" name="t2" id="bidAmount" class="form-control" placeholder="Enter your bid amount">
+            </div>
+            
+            <div class="form-group text-center">
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-paper-plane"></i> Submit Bid
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="footer">
+    <div class="container">
+      <p>&copy; {% now "Y" %} Smart Tender Management System | Powered by Blockchain Technology</p>
+    </div>
+  </div>
+
+</body>
+</html>
